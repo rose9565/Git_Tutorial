@@ -1,0 +1,174 @@
+1-1. 플젝생성 : new > Dynamic Web Project > 프로젝트명 입력 > Generic web.xml반드시 체크
+1-2. WED-INF/lib에 jar파일 (5개)붙여넣는다.
+     jsp-api.jar, servlet-api-jar, ojdbc6.jar, jstl.jar, standard.jar
+1-3. encoding : window > preferences > 검색어 encoding > utf-8로 설정
+
+2. Get방식일때 한글 안깨지게 처리하려면
+  (1) servers > Tomcat v8.5 > server.xml 문서를 아래처럼  UTF-8추가
+   <Connector URIEncoding="UTF-8"
+   (2)톰캣서버를 stop한 후  "publish to the server" 버튼을 클릭해서 Synchronized(동기화)시켜야 한다.
+       즉 이클립스에서 서버관련 xml  파일을 수정한 경우 수정내역이 톰켓서버의 xml에 copy해서 반영하도록 하는 과정
+    Servers탭의 Tomcat v 85서버 [republish -> Synchronized 로 변경]
+   
+3. 계정 생성 및 테이블 생성
+===========================================
+<3-1계정 생성 jsp/tiger>
+--mvc_board_tbl 테이블 생성(jsp 계정에서 작업)
+CREATE TABLE mvc_board_tbl(
+     num      NUMBER(5)    PRIMARY KEY,   --글번호
+     writer   VARCHAR(20)   NOT NULL,   --작성자
+     pwd      VARCHAR(20)   NOT NULL,   --비밀번호
+     subject  VARCHAR(20)   NOT NULL,   --글제목
+     content  VARCHAR(4000),    --글내용
+     readCnt  NUMBER(6)   DEFAULT 0,   --조회수
+     ref      NUMBER(5)   DEFAULT 0,   --답변글 그룹아이디  --답변 글번호로서 원글번호와 일치해야 한다. 
+     ref_step  NUMBER(5)   DEFAULT 0,  --답변글 그룹 스텝
+     ref_level  NUMBER(5)  DEFAULT 0,   --답변글 그룹레벨
+     ref_date   TIMESTAMP DEFAULT sysdate, --작성일
+     ip     VARCHAR(15)    --IP
+);
+SELECT * FROM tab; -- 테이블 목록 확인
+DESC mvc_board_tbl;  --테이블 구조 확인
+
+--시퀀스 생성 : 글번호
+DROP SEQUENCE board_seq;
+CREATE SEQUENCE board_seq
+   START WITH 1
+   INCREMENT BY 1
+   MAXVALUE 99999;
+
+--INSERT
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국', '1234', '글제목1', '글내용1',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국2', '1234', '글제목2', '글내용2',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국3', '1234', '글제목3', '글내용3',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국4', '1234', '글제목4', '글내용4',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국5', '1234', '글제목5', '글내용5',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국6', '1234', '글제목6', '글내용6',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국7', '1234', '글제목7', '글내용7',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국8', '1234', '글제목8', '글내용8',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국9', '1234', '글제목9', '글내용9',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국10', '1234', '글제목10', '글내용10',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국11', '1234', '글제목11', '글내용11',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국12', '1234', '글제목12', '글내용12',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국13', '1234', '글제목13', '글내용13',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국14', '1234', '글제목14', '글내용14',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국15', '1234', '글제목15', '글내용15',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국16', '1234', '글제목16', '글내용16',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국17', '1234', '글제목17', '글내용17',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국18', '1234', '글제목18', '글내용18',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국19', '1234', '글제목19', '글내용19',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국20', '1234', '글제목20', '글내용20',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국21', '1234', '글제목21', '글내용21',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국22', '1234', '글제목22', '글내용22',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국23', '1234', '글제목23', '글내용23',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국24', '1234', '글제목24', '글내용24',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국25', '1234', '글제목25', '글내용25',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국26', '1234', '글제목26', '글내용26',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국27', '1234', '글제목27', '글내용27',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국28', '1234', '글제목28', '글내용28',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국29', '1234', '글제목29', '글내용29',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+INSERT INTO mvc_board_tbl(num, writer, pwd, subject, content, readCnt, ref, ref_step, ref_level, ref_date, ip)
+  VALUES(board_seq.nextval, '전정국30', '1234', '글제목30', '글내용30',0, board_seq.currval,0,0, sysdate, '192.168.219.100');
+
+commit;
+
+commit;
+
+SELECT * FROM mvc_board_tbl;
+
+
+============================================
+4. 컨넥션 풀 작성
+(1) Servers > Tomcat 8.5 > context.xml에서 작성
+ <Resource auth="Container"
+        driverClassName="oracle.jdbc.driver.OracleDriver"
+        maxActive="5"
+        maxIdle="3"
+        maxWait="1000"
+        type="javax.sql.DataSource"
+        name="jdbc/Oracle11g"
+        url="jdbc:oracle:thin:@localhost:1521:xe"
+        username="jsp"
+        password="tiger"                
+    />
+(2) 톰캣서버를 stop한 후  "publish to the server" 버튼을 클릭해서 Synchronized(동기화)시켜야 한다.
+즉 이클립스에서 서버관련 xml  파일을 수정한 경우 수정내역이 톰켓서버의 xml에 copy해서 반영하도록 하는 과정
+    Servers탭의 Tomcat v 85서버 [republish -> Synchronized 로 변경]
+
+5. 패키지 및 파일 생성
+   java Resources > src > 패키지 생성
+   Controlller(=서블릿)
+   Service
+   Persistance(=dao)
+   vo(=dto)
+6. webContent > member 폴더 작성해서
+   -jsp 파일
+   -javascript
+   - css
+   
+7. VO(=Value Object) 생성 : 맴버면수는 mvc_member_tbl 테이블의 컬럼정보와반드시 일치
+    DTO(=Data Transfer Object) 역할
+    
+    dto의 propertyaud(=맴버변수), setter ,getter, jsp의 input name
+    => mvc_member_tbl 테이블의 컬럼정보와 반드시 일치해야한다.
+    
+8. 자바소스 작성
+   Controller(=서블릿) : 서블릿 작성
